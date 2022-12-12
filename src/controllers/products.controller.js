@@ -33,7 +33,7 @@ export const insertProduct = async (req, res) => {
 
     try {
 
-        const [rows] = await pool.query('INSERT INTO products (name,image,stock,target_stock,ref_alcampo,ref_carrefour) VALUES(?,?,?,?,?,?)', [name, image, stock, target_stock, ref_alcampo, ref_carrefour]);
+        const [result] = await pool.query('INSERT INTO products (name,image,stock,target_stock,ref_alcampo,ref_carrefour) VALUES (?,?,?,?,?,?)', [name, image, stock, target_stock, ref_alcampo, ref_carrefour]);
 
         if (result.affectedRows <= 0) {
             return res.status(404).json({ message: "Product not created" });
