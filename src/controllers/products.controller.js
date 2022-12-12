@@ -72,7 +72,7 @@ export const patchProduct = async (req, res) => {
 
         res.sendStatus(204);
     } catch (error) {
-        return res.status(500).json({ message: req.body});
+        return res.status(500).json({ message: `UPDATE products SET name=IFNULL(${name},name),IFNULL(${image},image),stock=IFNULL(${stock},stock),target_stock=IFNULL(${target_stock},target_stock),ref_alcampo=IFNULL(${ref_alcampo},ref_alcampo),ref_carrefour=IFNULL(${ref_carrefour},ref_carrefour) WHERE id=${req.params.id}`});
     }
 };
 
