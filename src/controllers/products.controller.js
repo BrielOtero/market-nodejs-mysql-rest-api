@@ -1,5 +1,4 @@
 
-import { query } from 'express';
 import { pool } from '../db.js';
 
 
@@ -70,10 +69,16 @@ function checkUndefined(value) {
 export const patchProduct = async (req, res) => {
     const { name, image, stock, target_stock, ref_alcampo, ref_carrefour } = req.body;
 
-    try {
-        queryValue ="UPDATE products SET name=IFNULL(?,name),IFNULL(?,image),stock=IFNULL(?,stock),target_stock=IFNULL(?,target_stock),ref_alcampo=IFNULL(?,ref_alcampo),ref_carrefour=IFNULL(?,ref_carrefour) WHERE id=?", [checkUndefined(name), checkUndefined(image), checkUndefined(stock), checkUndefined(target_stock), checkUndefined(ref_alcampo), checkUndefined(ref_carrefour), res.params.id];
+    name = checkUndefined(name);
+    image = checkUndefined(image);
+    stock = checkUndefined(stock);
+    target_stock=checkUndefined(target_stock);
+    ref_alcampo = checkUndefined(ref_alcampo);
+    ref_carrefour = checkUndefined(ref_carrefour);
 
-        const [result] = await pool.query(queryValue);
+
+    try {
+        const [result] = await pool.query("UPDATE products SET name=IFNULL(?,name),IFNULL(?,image),stock=IFNULL(?,stock),target_stock=IFNULL(?,target_stock),ref_alcampo=IFNULL(?,ref_alcampo),ref_carrefour=IFNULL(?,ref_carrefour) WHERE id=?", [name, image, stock, target_stock, ref_alcampo, ref_carrefour, res.params.id]);
 
         if (result.affectedRows <= 0) {
             return res.status(404).json({ message: "Product not updated" });
@@ -81,7 +86,7 @@ export const patchProduct = async (req, res) => {
 
         res.sendStatus(204);
     } catch (error) {
-        return res.status(500).json({ message: queryValue });
+        return res.status(500).json({ message: "Error 500" });
     }
 };
 
