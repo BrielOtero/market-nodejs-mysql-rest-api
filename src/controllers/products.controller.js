@@ -58,25 +58,19 @@ Json que se recibe
 }
 */
 
-const checkUndefined = (value) => {
-    if (value === undefined) {
-        return null;
-    } else {
-        return value;
-    }
-}
+
 
 export const patchProduct = async (req, res) => {
     const { name, image, stock, target_stock, ref_alcampo, ref_carrefour } = req.body;
 
     try {
 
-    name = checkUndefined(name);
-    image = checkUndefined(image);
-    stock = checkUndefined(stock);
-    target_stock = checkUndefined(target_stock);
-    ref_alcampo = checkUndefined(ref_alcampo);
-    ref_carrefour = checkUndefined(ref_carrefour);
+        name = name === undefined ? null : name;
+        image = image === undefined ? null : image;
+        stock = stock === undefined ? null : stock;
+        target_stock = target_stock === undefined ? null : target_stock;
+        ref_alcampo = ref_alcampo === undefined ? null : ref_alcampo;
+        ref_carrefour = ref_carrefour === undefined ? null : ref_carrefour;
 
 
         const [result] = await pool.query("UPDATE products SET name=IFNULL(?,name),image=IFNULL(?,image),stock=IFNULL(?,stock),target_stock=IFNULL(?,target_stock),ref_alcampo=IFNULL(?,ref_alcampo),ref_carrefour=IFNULL(?,ref_carrefour) WHERE id=?", [name, image, stock, target_stock, ref_alcampo, ref_carrefour, res.params.id]);
@@ -87,7 +81,7 @@ export const patchProduct = async (req, res) => {
 
         res.sendStatus(204);
     } catch (error) {
-        return res.status(500).json({ message: name+""+image+""+stock+""+target_stock+""+ref_alcampo+""+ref_carrefour });
+        return res.status(500).json({ message: name + "" + image + "" + stock + "" + target_stock + "" + ref_alcampo + "" + ref_carrefour });
     }
 };
 
