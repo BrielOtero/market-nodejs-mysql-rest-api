@@ -67,12 +67,12 @@ export const patchProduct = async (req, res) => {
         const { id } = res.params;
 
 
-        // name = name === undefined ? null : name;
-        // image = image === undefined ? null : image;
-        // stock = stock === undefined ? null : stock;
-        // target_stock = target_stock === undefined ? null : target_stock;
-        // ref_alcampo = ref_alcampo === undefined ? null : ref_alcampo;
-        // ref_carrefour = ref_carrefour === undefined ? null : ref_carrefour;
+        namePro = namePro === undefined ? null : namePro;
+        image = image === undefined ? null : image;
+        stock = stock === undefined ? null : stock;
+        target_stock = target_stock === undefined ? null : target_stock;
+        ref_alcampo = ref_alcampo === undefined ? null : ref_alcampo;
+        ref_carrefour = ref_carrefour === undefined ? null : ref_carrefour;
 
 
         const [result] = await pool.query(`UPDATE products SET name = IFNULL(${namePro},name), image = IFNULL(${image},image), stock = IFNULL(${stock},stock), target_stock = IFNULL(${target_stock},target_stock), ref_alcampo = IFNULL(${ref_alcampo},ref_alcampo), ref_carrefour = IFNULL(${ref_carrefour},ref_carrefour) WHERE id=${id}`);
@@ -85,7 +85,7 @@ export const patchProduct = async (req, res) => {
 
 
     } catch (error) {
-        return res.status(500).json({ message: "Error" });
+        return res.status(500).json(`UPDATE products SET name = IFNULL(${namePro},name), image = IFNULL(${image},image), stock = IFNULL(${stock},stock), target_stock = IFNULL(${target_stock},target_stock), ref_alcampo = IFNULL(${ref_alcampo},ref_alcampo), ref_carrefour = IFNULL(${ref_carrefour},ref_carrefour) WHERE id=${id}`);
     }
 };
 
