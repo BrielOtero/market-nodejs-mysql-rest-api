@@ -79,7 +79,7 @@ export const patchProduct = async (req, res) => {
     ref_carrefour = checkUndefined(ref_carrefour);
 
 
-        const [result] = await pool.query("UPDATE products SET name=IFNULL(?,name),IFNULL(?,image),stock=IFNULL(?,stock),target_stock=IFNULL(?,target_stock),ref_alcampo=IFNULL(?,ref_alcampo),ref_carrefour=IFNULL(?,ref_carrefour) WHERE id=?", [name, image, stock, target_stock, ref_alcampo, ref_carrefour, res.params.id]);
+        const [result] = await pool.query("UPDATE products SET name=IFNULL(?,name),image=IFNULL(?,image),stock=IFNULL(?,stock),target_stock=IFNULL(?,target_stock),ref_alcampo=IFNULL(?,ref_alcampo),ref_carrefour=IFNULL(?,ref_carrefour) WHERE id=?", [name, image, stock, target_stock, ref_alcampo, ref_carrefour, res.params.id]);
 
         if (result.affectedRows <= 0) {
             return res.status(404).json({ message: "Product not updated" });
