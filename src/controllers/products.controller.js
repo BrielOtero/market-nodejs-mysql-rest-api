@@ -65,15 +65,15 @@ export const patchProduct = async (req, res) => {
     const { id } = res.params;
     try {
 
-        name = name === undefined ? null : name;
-        image = image === undefined ? null : image;
-        stock = stock === undefined ? null : stock;
-        target_stock = target_stock === undefined ? null : target_stock;
-        ref_alcampo = ref_alcampo === undefined ? null : ref_alcampo;
-        ref_carrefour = ref_carrefour === undefined ? null : ref_carrefour;
+        // name = name === undefined ? null : name;
+        // image = image === undefined ? null : image;
+        // stock = stock === undefined ? null : stock;
+        // target_stock = target_stock === undefined ? null : target_stock;
+        // ref_alcampo = ref_alcampo === undefined ? null : ref_alcampo;
+        // ref_carrefour = ref_carrefour === undefined ? null : ref_carrefour;
 
 
-        const [result] = await pool.query(`UPDATE products SET name = IFNULL(${name},name), image = IFNULL(${image},image), stock = IFNULL(${stock},stock), target_stock = IFNULL(${target_stock},target_stock), ref_alcampo = IFNULL(${ref_alcampo},ref_alcampo), ref_carrefour=IFNULL(${ref_carrefour},ref_carrefour) WHERE id=${id}`);
+        const [result] = await pool.query(`UPDATE products SET name = IFNULL(${name},name), image = IFNULL(${image},image), stock = IFNULL(${stock},stock), target_stock = IFNULL(${target_stock},target_stock), ref_alcampo = IFNULL(${ref_alcampo},ref_alcampo), ref_carrefour = IFNULL(${ref_carrefour},ref_carrefour) WHERE id=${id}`);
 
         if (result.affectedRows <= 0) {
             return res.status(404).json({ message: "Product not updated" });
@@ -81,7 +81,7 @@ export const patchProduct = async (req, res) => {
 
         res.sendStatus(204);
     } catch (error) {
-        return res.status(500).json({ message: `UPDATE products SET name = IFNULL(${name},name), image = IFNULL(${image},image), stock = IFNULL(${stock},stock), target_stock = IFNULL(${target_stock},target_stock), ref_alcampo = IFNULL(${ref_alcampo},ref_alcampo), ref_carrefour=IFNULL(${ref_carrefour},ref_carrefour) WHERE id=${id}` });
+        return res.status(600).json({ message: `UPDATE products SET name = IFNULL(${name},name), image = IFNULL(${image},image), stock = IFNULL(${stock},stock), target_stock = IFNULL(${target_stock},target_stock), ref_alcampo = IFNULL(${ref_alcampo},ref_alcampo), ref_carrefour=IFNULL(${ref_carrefour},ref_carrefour) WHERE id=${id}` });
     }
 };
 
