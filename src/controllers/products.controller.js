@@ -69,6 +69,8 @@ const checkUndefined = (value) => {
 export const patchProduct = async (req, res) => {
     const { name, image, stock, target_stock, ref_alcampo, ref_carrefour } = req.body;
 
+    try {
+
     name = checkUndefined(name);
     image = checkUndefined(image);
     stock = checkUndefined(stock);
@@ -77,7 +79,6 @@ export const patchProduct = async (req, res) => {
     ref_carrefour = checkUndefined(ref_carrefour);
 
 
-    try {
         const [result] = await pool.query("UPDATE products SET name=IFNULL(?,name),IFNULL(?,image),stock=IFNULL(?,stock),target_stock=IFNULL(?,target_stock),ref_alcampo=IFNULL(?,ref_alcampo),ref_carrefour=IFNULL(?,ref_carrefour) WHERE id=?", [name, image, stock, target_stock, ref_alcampo, ref_carrefour, res.params.id]);
 
         if (result.affectedRows <= 0) {
@@ -86,7 +87,7 @@ export const patchProduct = async (req, res) => {
 
         res.sendStatus(204);
     } catch (error) {
-        return res.status(500).json({ message: "Error 500" });
+        return res.status(500).json({ message: name+image+stock+target_stock+ref_alcampo+ref_carrefour });
     }
 };
 
