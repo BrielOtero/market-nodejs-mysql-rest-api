@@ -3,21 +3,17 @@ import { pool } from '../db.js';
 
 
 export const getProducts = async (req, res) => {
+    const [rows] = await pool.query('SELECT * FROM products');
     try {
-
-        const [rows] = await pool.query('SELECT * FROM products');
         res.json(rows);
-
     } catch (error) {
         return res.status(500).json({ message: "Something goes wrong" });
     }
 };
 
 export const getProduct = async (req, res) => {
+    const [rows] = await pool.query('SELECT * FROM products WHERE id=?', [req.params.id]);
     try {
-
-        const [rows] = await pool.query('SELECT * FROM products WHERE id=?', [req.params.id]);
-
         if (rows.len <= 0) {
             return res.status(404).json({ message: "Product not found" });
         }
@@ -61,9 +57,9 @@ Json que se recibe
 
 
 export const patchProduct = async (req, res) => {
-    
+
     const { namePro, image, stock, target_stock, ref_alcampo, ref_carrefour } = req.body;
-    const { id } = res.params;
+    const { id } = req.params;
 
     try {
         // namePro = namePro === undefined ? null : namePro;
@@ -81,17 +77,13 @@ export const patchProduct = async (req, res) => {
 
         res.sendStatus(204);
     } catch (error) {
-        return res.status(500).json({
-            message: "ERROR"
-        });
+        return res.status(500).json({ message: "ERROR" });
     }
 };
 
 export const deleteProduct = async (req, res) => {
+    const [result] = await pool.query('DELETE FROM products WHERE id=?', [req.params.id]);
     try {
-
-        const [result] = await pool.query('DELETE FROM products WHERE id=?', [req.params.id]);
-
         if (result.affectedRows <= 0) {
             return res.status(404).json({ message: "Product not deleted" });
         }
