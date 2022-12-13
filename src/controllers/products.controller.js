@@ -63,7 +63,7 @@ Json que se recibe
 export const patchProduct = async (req, res) => {
     try {
 
-        const { name, image, stock, target_stock, ref_alcampo, ref_carrefour } = req.body;
+        const { namePro, image, stock, target_stock, ref_alcampo, ref_carrefour } = req.body;
         const { id } = res.params;
 
 
@@ -75,7 +75,7 @@ export const patchProduct = async (req, res) => {
         // ref_carrefour = ref_carrefour === undefined ? null : ref_carrefour;
 
 
-        const [result] = await pool.query(`UPDATE products SET name = IFNULL(${name},name), image = IFNULL(${image},image), stock = IFNULL(${stock},stock), target_stock = IFNULL(${target_stock},target_stock), ref_alcampo = IFNULL(${ref_alcampo},ref_alcampo), ref_carrefour = IFNULL(${ref_carrefour},ref_carrefour) WHERE id=${id}`);
+        const [result] = await pool.query(`UPDATE products SET name = IFNULL(${namePro},name), image = IFNULL(${image},image), stock = IFNULL(${stock},stock), target_stock = IFNULL(${target_stock},target_stock), ref_alcampo = IFNULL(${ref_alcampo},ref_alcampo), ref_carrefour = IFNULL(${ref_carrefour},ref_carrefour) WHERE id=${id}`);
 
         if (result.affectedRows <= 0) {
             return res.status(404).json({ message: "Product not updated" });
@@ -85,7 +85,7 @@ export const patchProduct = async (req, res) => {
 
 
     } catch (error) {
-        return res.status(500).json({ message: `UPDATE products SET name = IFNULL(${name},name), image = IFNULL(${image},image), stock = IFNULL(${stock},stock), target_stock = IFNULL(${target_stock},target_stock), ref_alcampo = IFNULL(${ref_alcampo},ref_alcampo), ref_carrefour=IFNULL(${ref_carrefour},ref_carrefour) WHERE id=${id}` });
+        return res.status(500).json({ message: "Error" });
     }
 };
 
