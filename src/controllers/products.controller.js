@@ -58,7 +58,7 @@ Json que se recibe
 }
 */
 
-function checkUndefined(value) {
+const checkUndefined = (value) => {
     if (value === undefined) {
         return null;
     } else {
@@ -72,7 +72,7 @@ export const patchProduct = async (req, res) => {
     name = checkUndefined(name);
     image = checkUndefined(image);
     stock = checkUndefined(stock);
-    target_stock=checkUndefined(target_stock);
+    target_stock = checkUndefined(target_stock);
     ref_alcampo = checkUndefined(ref_alcampo);
     ref_carrefour = checkUndefined(ref_carrefour);
 
