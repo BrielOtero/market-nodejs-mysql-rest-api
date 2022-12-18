@@ -7,20 +7,14 @@ CREATE TABLE products(
     name VARCHAR(30),
     image VARCHAR(50) DEFAULT NULL,
     stock INT,
+    quantity REAL,
     target_stock INT,
+    measurement VARCHAR(5),
     ref_alcampo VARCHAR(30) DEFAULT NULL,
+    quantity_alcampo REAL,
     ref_carrefour VARCHAR(30) DEFAULT NULL,
+    quantity_carrefour REAL,
     PRIMARY KEY(id)
 );
 
 DESCRIBE products;
-
-INSERT INTO
-    products
-VALUES
-    (1, 'Macarrones', null, 0, 3, 111, 111),
-    (2, 'Patatas', null, 0, 3, 111, 111),
-    (3, 'Tomates', null, 0, 3, 111, 111),
-    (4, 'Pimientos', null, 0, 3, 111, 111),
-    (5, 'Huevos', null, 0, 3, 111, 111),
-    (6, 'Lechuga', null, 0, 3, 111, 111);

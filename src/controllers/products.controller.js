@@ -26,11 +26,11 @@ export const getProduct = async (req, res) => {
 
 
 export const insertProduct = async (req, res) => {
-    const { name, image, stock, target_stock, ref_alcampo, ref_carrefour } = req.body;
+    const { name, image, stock, target_stock, quantity, measurement, ref_alcampo, quantity_alcampo, ref_carrefour, quantity_carrefour } = req.body;
 
     try {
 
-        const [result] = await pool.query('INSERT INTO products (name,image,stock,target_stock,ref_alcampo,ref_carrefour) VALUES (?,?,?,?,?,?)', [name, image, stock, target_stock, ref_alcampo, ref_carrefour]);
+        const [result] = await pool.query('INSERT INTO products (name,image,stock,target_stock,quantity,measurement,ref_alcampo,quantity_alcampo,ref_carrefour,quantity_carrefour) VALUES (?,?,?,?,?,?,?,?,?,?)', [name, image, stock, target_stock, quantity, measurement, ref_alcampo, quantity_alcampo, ref_carrefour, quantity_carrefour]);
 
         if (result.affectedRows <= 0) {
             return res.status(404).json({ message: "Product not created" });
@@ -49,18 +49,22 @@ Json que se recibe
     "image":"",
     "stock":2,
     "target_stock":5,
+    "quantity":1
+    "measurement":"Kg"
     "ref_alcampo":4444,
-    "ref_carrefour":5555
+    "quantity_alcampo": 1.3
+    "ref_carrefour":5555,
+    "quantity_carrefour": 1.3
 }
 */
 
 export const patchProduct = async (req, res) => {
 
-    const { name, image, stock, target_stock, ref_alcampo, ref_carrefour } = req.body;
+    const { name, image, stock, target_stock, quantity, measurement, ref_alcampo, quantity_alcampo, ref_carrefour, quantity_carrefour } = req.body;
     const { id } = req.params;
 
     try {
-        const [result] = await pool.query('UPDATE products SET name = IFNULL(?,name), image = IFNULL(?,image), stock = IFNULL(?,stock), target_stock = IFNULL(?,target_stock), ref_alcampo = IFNULL(?,ref_alcampo), ref_carrefour = IFNULL(?,ref_carrefour) WHERE id=?', [name, image, stock, target_stock, ref_alcampo, ref_carrefour, id]);
+        const [result] = await pool.query('UPDATE products SET name = IFNULL(?,name), image = IFNULL(?,image), stock = IFNULL(?,stock), target_stock = IFNULL(?,target_stock), quantity = IFNULL(?,quantity), measurement = IFNULL(?,measurement),ref_alcampo = IFNULL(?,ref_alcampo), quantity_alcampo = IFNULL(?,quantity_alcampo), ref_carrefour = IFNULL(?,ref_carrefour),quantity_carrefour = IFNULL(?,quantity_carrefour) WHERE id=?', [name, image, stock, target_stock, quantity, measurement, ref_alcampo, quantity_alcampo, ref_carrefour, quantity_carrefour, id]);
 
         if (result.affectedRows <= 0) {
             return res.status(404).json({ message: "Product not updated" });
@@ -68,7 +72,7 @@ export const patchProduct = async (req, res) => {
 
         res.sendStatus(204);
     } catch (error) {
-        return res.status(500).json({ message: "Something goes wrong"  });
+        return res.status(500).json({ message: "Something goes wrong" });
     }
 };
 
